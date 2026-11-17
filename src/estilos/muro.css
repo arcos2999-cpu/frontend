@@ -1,0 +1,154 @@
+/* Muro institucional (anuncios) — usa los colores y variables de app.css (modo claro y oscuro). */
+
+/* ------------------------------------------------------- navegación inferior */
+.nav-inferior {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 14;
+  display: flex;
+  background: var(--superficie);
+  border-top: 1px solid var(--borde);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.nav-inferior a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 8px 8px;
+  color: var(--texto-sec);
+  font-size: .78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.nav-inferior a svg { width: 24px; height: 24px; fill: currentColor; }
+.nav-inferior a.activo { color: var(--primario); }
+.nav-inferior a:focus-visible { outline: 2px solid var(--primario); outline-offset: -4px; }
+
+/* Páginas con navegación inferior: más espacio abajo y el botón flotante sube. */
+.vista.con-nav { padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
+.fab.fab-nav { bottom: calc(80px + env(safe-area-inset-bottom)); }
+
+/* ------------------------------------------------------------------ anuncios */
+.anuncio { display: grid; gap: 10px; padding: 14px 14px 6px; }
+.anuncio.tope { outline: 2px solid var(--dorado); }
+
+.anuncio-cabeza { display: flex; align-items: center; gap: 10px; }
+.anuncio-avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--contenedor-primario);
+  color: var(--sobre-contenedor-primario);
+  font-weight: 700;
+}
+.anuncio-autor { font-weight: 600; line-height: 1.2; }
+.anuncio-tiempo { font-size: .82rem; color: var(--texto-sec); }
+.anuncio-etiqueta {
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--dorado);
+  color: var(--sobre-dorado);
+  font-size: .74rem;
+  font-weight: 700;
+}
+
+.anuncio-enlace { display: grid; gap: 10px; color: inherit; text-decoration: none; }
+.anuncio-enlace:focus-visible { outline: 2px solid var(--primario); outline-offset: 4px; border-radius: 8px; }
+.anuncio-imagen {
+  display: block;
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: var(--radio-chico);
+  background: var(--superficie-2);
+}
+.anuncio-titulo { margin: 0; font-size: 1.1rem; line-height: 1.3; }
+.anuncio-datos { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; color: var(--texto-sec); font-size: .9rem; }
+.anuncio-datos li { display: flex; align-items: center; gap: 6px; }
+.anuncio-datos svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.anuncio-texto {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.anuncio-texto.completo { display: block; overflow: visible; }
+
+.anuncio-acciones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 -8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--superficie-3);
+}
+.anuncio-espacio { flex: 1; }
+.anuncio-accion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--texto-sec);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.anuncio-accion svg { width: 24px; height: 24px; fill: currentColor; }
+.anuncio-accion:hover { background: var(--superficie-2); }
+.anuncio-accion:focus-visible { outline: 2px solid var(--primario); outline-offset: -2px; }
+.anuncio-accion.activa.a-like { color: #d81b60; }
+.anuncio-accion.activa.a-guardar { color: var(--primario); }
+.anuncio-accion.activa.a-fav { color: #e0a100; }
+
+/* --------------------------------------------------------------- comentarios */
+.comentar { display: flex; gap: 8px; margin-bottom: 14px; }
+.comentar .entrada { flex: 1; min-width: 0; }
+.comentar .btn { flex: none; min-width: 52px; padding: 0 14px; }
+.comentario { padding: 12px 14px; }
+.comentario-cabeza { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.comentario-rol {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--contenedor-primario);
+  color: var(--sobre-contenedor-primario);
+  font-size: .72rem;
+  font-weight: 700;
+}
+.comentario-tiempo { font-size: .8rem; color: var(--texto-sec); }
+.comentario-borrar { margin-left: auto; width: 36px; height: 36px; color: var(--texto-sec); }
+.comentario-borrar svg { width: 20px; height: 20px; }
+.comentario-texto { margin: 6px 0 0; overflow-wrap: anywhere; }
+
+/* ----------------------------------------------------------------- actividad */
+.actividad { display: grid; gap: 4px; color: inherit; text-decoration: none; padding: 12px 14px; }
+a.actividad:focus-visible { outline: 2px solid var(--primario); outline-offset: 2px; }
+.actividad-tag {
+  justify-self: start;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--contenedor-primario);
+  color: var(--sobre-contenedor-primario);
+  font-size: .78rem;
+  font-weight: 700;
+}
+.actividad-tag.tag-like { background: #fce4ec; color: #880e4f; }
+.actividad-tag.tag-favorito { background: #fff3cd; color: #6b4e00; }
+.actividad-tag.quitado { background: var(--superficie-3); color: var(--texto-sec); text-decoration: line-through; }
+.actividad-titulo { font-weight: 600; overflow-wrap: anywhere; }
+.actividad-tiempo { font-size: .82rem; color: var(--texto-sec); }

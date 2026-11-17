@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Barra from '../components/Barra.jsx';
 import Icono from '../components/Icono.jsx';
+import NavInferior from '../components/NavInferior.jsx';
 import { ListaReportes } from '../components/Reporte.jsx';
 import { AvisoPush, Cargando, Vacio } from '../components/Varios.jsx';
 import { api } from '../lib/api.js';
@@ -40,13 +41,13 @@ export default function AdminInicio() {
   return (
     <>
       <Barra
-        titulo="Administración"
+        titulo="Buzón de quejas · Admin"
         acciones={[
           { icono: 'recargar', etiqueta: 'Actualizar', alTocar: cargar },
           { icono: 'salir', etiqueta: 'Cerrar sesión', alTocar: cerrarSesion },
         ]}
       />
-      <main className="vista">
+      <main className="vista con-nav">
         <p className="saludo">Hola, {usuario?.nombre}</p>
         <p className="subtitulo" id="resumen">{resumen}</p>
         <AvisoPush />
@@ -66,6 +67,7 @@ export default function AdminInicio() {
                 : <Vacio>No hay reportes activos. ¡Todo al día!</Vacio>}
         </div>
       </main>
+      <NavInferior activo="quejas" />
     </>
   );
 }

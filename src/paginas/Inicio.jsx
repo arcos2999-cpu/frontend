@@ -1,7 +1,8 @@
-/** Inicio de alumnos, maestros y personal: accesos en baldosas de color y 3 reportes recientes. */
+/** Módulo de quejas (alumnos, maestros y personal): accesos en baldosas de color y 3 reportes recientes. */
 import { useCallback, useEffect, useState } from 'react';
 import Barra from '../components/Barra.jsx';
 import Icono from '../components/Icono.jsx';
+import NavInferior from '../components/NavInferior.jsx';
 import { ListaReportes } from '../components/Reporte.jsx';
 import { AvisoPush, Cargando, Vacio } from '../components/Varios.jsx';
 import { api } from '../lib/api.js';
@@ -32,13 +33,13 @@ export default function Inicio() {
   return (
     <>
       <Barra
-        titulo="Buzón BUAP SJC"
+        titulo="Buzón de quejas"
         acciones={[
           { icono: 'recargar', etiqueta: 'Actualizar', alTocar: cargar },
           { icono: 'salir', etiqueta: 'Cerrar sesión', alTocar: cerrarSesion },
         ]}
       />
-      <main className="vista">
+      <main className="vista con-nav">
         <p className="saludo">Hola, {usuario?.nombre}</p>
         <p className="subtitulo">{rolLabel(usuario?.rol)}</p>
         <AvisoPush />
@@ -55,8 +56,9 @@ export default function Inicio() {
               : reportes.length ? <ListaReportes reportes={reportes} />
                 : <Vacio>Aún no has enviado ningún reporte.<br />Toca “Nuevo reporte” para empezar.</Vacio>}
         </div>
-        <a className="fab" href="#/nuevo"><Icono nombre="mas" />Nuevo reporte</a>
+        <a className="fab fab-nav" href="#/nuevo"><Icono nombre="mas" />Nuevo reporte</a>
       </main>
+      <NavInferior activo="quejas" />
     </>
   );
 }

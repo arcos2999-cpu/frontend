@@ -106,6 +106,17 @@ export const api = {
   reabrir: (id, comentario) => pedir('POST', `reportes/${id}/reabrir`, { json: { comentario } }),
   cambiarEstado: (id, cuerpo) => pedir('PATCH', `reportes/${id}/estado`, { json: cuerpo }),
 
+  // ---- muro de anuncios (todo queda ligado al usuario con sesión)
+  anuncios: (q) => pedir('GET', 'anuncios', { query: q }),
+  anuncio: (id) => pedir('GET', `anuncios/${encodeURIComponent(id)}`),
+  crearAnuncio: (formData) => pedir('POST', 'anuncios', { form: formData }),
+  borrarAnuncio: (id) => pedir('DELETE', `anuncios/${id}`),
+  reaccionar: (id, tipo) => pedir('POST', `anuncios/${id}/${tipo}`), // tipo: like | guardar | favorito
+  comentarios: (id) => pedir('GET', `anuncios/${id}/comentarios`),
+  comentar: (id, texto) => pedir('POST', `anuncios/${id}/comentarios`, { json: { texto } }),
+  borrarComentario: (id) => pedir('DELETE', `comentarios/${id}`),
+  actividad: (q) => pedir('GET', 'actividad', { query: q }),
+
   // ---- administración
   usuarios: (q) => pedir('GET', 'usuarios', { query: q }),
   cambiarRol: (id, rol) => pedir('PATCH', `usuarios/${id}/rol`, { json: { rol } }),

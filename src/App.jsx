@@ -3,6 +3,7 @@
  *  publica: no requiere sesión (y si ya hay sesión, manda al inicio)
  *  admin:   solo administradores
  *  usuario: solo alumno, maestro y personal (el admin no crea reportes)
+ * Dos módulos: Anuncios (muro institucional, pantalla principal) y Quejas (buzón).
  */
 import { useEffect } from 'react';
 import { Avisos, SinConexion } from './components/Avisos.jsx';
@@ -13,6 +14,10 @@ import { sesion, sesionVigente, useSesion } from './lib/sesion.js';
 
 import Login from './paginas/Login.jsx';
 import Registro from './paginas/Registro.jsx';
+import Muro from './paginas/Muro.jsx';
+import Anuncio from './paginas/Anuncio.jsx';
+import NuevoAnuncio from './paginas/NuevoAnuncio.jsx';
+import Actividad from './paginas/Actividad.jsx';
 import Inicio from './paginas/Inicio.jsx';
 import AdminInicio from './paginas/AdminInicio.jsx';
 import Reportes from './paginas/Reportes.jsx';
@@ -24,7 +29,11 @@ import Estadisticas from './paginas/Estadisticas.jsx';
 const RUTAS = [
   { patron: /^login$/, pagina: () => Login, publica: true },
   { patron: /^registro$/, pagina: () => Registro, publica: true },
-  { patron: /^(inicio)?$/, pagina: (esAdmin) => (esAdmin ? AdminInicio : Inicio) },
+  { patron: /^(inicio)?$/, pagina: () => Muro },
+  { patron: /^anuncio\/(\d+)$/, pagina: () => Anuncio },
+  { patron: /^anuncios\/nuevo$/, pagina: () => NuevoAnuncio, admin: true },
+  { patron: /^actividad$/, pagina: () => Actividad },
+  { patron: /^quejas$/, pagina: (esAdmin) => (esAdmin ? AdminInicio : Inicio) },
   { patron: /^reportes$/, pagina: () => Reportes },
   { patron: /^reporte\/(\d+)$/, pagina: () => Detalle },
   { patron: /^nuevo$/, pagina: () => Nuevo, usuario: true },

@@ -7,6 +7,7 @@ import Barra from '../components/Barra.jsx';
 import Icono from '../components/Icono.jsx';
 import { api } from '../lib/api.js';
 import { aviso } from '../lib/avisos.js';
+import { guardarPendiente } from '../lib/cola.js';
 import { useMontado } from '../lib/hooks.js';
 import { comprimir } from '../lib/imagenes.js';
 import { volver } from '../lib/router.js';
@@ -78,6 +79,7 @@ export default function Nuevo() {
     if (valores.id_categoria) datos.append('id_categoria', valores.id_categoria);
 
     // Reducir las fotos antes de subirlas (el servidor acepta máx. 3 MB por imagen).
+    const jpegs = [];
     for (let i = 0; i < fotos.length; i++) {
       const jpeg = await comprimir(fotos[i].archivo);
       if (!jpeg) {
@@ -85,6 +87,7 @@ export default function Nuevo() {
         aviso('No se pudo leer una de las fotos. Quítala e inténtalo de nuevo.');
         return;
       }
+      jpegs.push(jpeg);
       datos.append('imagenes[]', jpeg, `foto${i + 1}.jpg`);
     }
 
@@ -95,6 +98,16 @@ export default function Nuevo() {
       volver();
     } catch (err) {
       if (err.sesionCerrada || !montado()) return;
+      if (err.status === 0) {
+        // Sin conexión: se guarda en el teléfono y se envía solo cuando vuelva el internet.
+        const guardado = await guardarPendiente({ nombre, descripcion, ubicacion, id_categoria: valores.id_categoria, fotos: jpegs });
+        if (!montado()) return;
+        if (guardado) {
+          aviso('Sin conexión. Tu reporte se guardó en el teléfono y se enviará solo cuando vuelva el internet.');
+          volver();
+          return;
+        }
+      }
       setEnviando(false);
       setErrores(err.errores || {});
       aviso(err.message);

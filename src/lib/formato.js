@@ -13,6 +13,21 @@ export function fecha(servidor) {
   return `${Number(m[3])} ${MESES[Number(m[2]) - 1]} ${m[1]}, ${m[4]}:${m[5]}`;
 }
 
+/** "2026-10-25 18:30:00" -> "hace 5 min", "hace 2 h", "hace 3 días" (y la fecha completa si pasó una semana). */
+export function tiempoRelativo(servidor) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})(?::(\d{2}))?/.exec(servidor || '');
+  if (!m) return servidor || '';
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4]), Number(m[5]), Number(m[6] || 0));
+  const min = Math.floor((Date.now() - d.getTime()) / 60000);
+  if (min < 1) return 'ahora';
+  if (min < 60) return `hace ${min} min`;
+  const h = Math.floor(min / 60);
+  if (h < 24) return `hace ${h} h`;
+  const dias = Math.floor(h / 24);
+  if (dias < 7) return `hace ${dias} ${dias === 1 ? 'día' : 'días'}`;
+  return fecha(servidor);
+}
+
 export function plural(n, uno, varios) {
   return `${n} ${n === 1 ? uno : varios}`;
 }

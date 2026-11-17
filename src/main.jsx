@@ -5,6 +5,7 @@ import { push } from './lib/push.js';
 import { registrarServiceWorker } from './lib/pwa.js';
 import { sesion } from './lib/sesion.js';
 import './estilos/app.css';
+import './estilos/muro.css';
 
 registrarServiceWorker();
 if (sesion.activa()) push.sincronizar();
